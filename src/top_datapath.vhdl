@@ -1477,7 +1477,7 @@ end component ; -- z_reg
 
   
 
-      RS :RS port map(
+      ReStation :RS port map(
 
        instr1_valid_in=>instr1_RS_valid_in,
  	   op_code1_in=>instr1_decode_op_code,
