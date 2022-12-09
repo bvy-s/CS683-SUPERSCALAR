@@ -19,4 +19,4 @@ begin
 			o <= d_1;
 		end if;
     end process;
-end behaviour;
+end behviour;
