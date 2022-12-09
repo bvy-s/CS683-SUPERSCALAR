@@ -107,41 +107,42 @@ begin
 
 	Branch_Scheduler : process(clk,br_stall_in,br_instr_valid_in,br_op_code_in,br_original_dest_in,br_rename_dest_in,br_operand_1_in,br_operand_1_valid_in,br_operand_2_in,br_operand_2_valid_in,br_operand_3_in,br_operand_3_valid_in,br_pc_in,br_nxt_pc_in,br_sch_valid_in,br_self_tag_in,br_btag_in)
 	
-	variable br_instr_valid_var: slv_array_t(0 to 9);
-	variable br_op_code_var: slv4_array_t(0 to 9);
-	variable br_original_dest_var: slv3_array_t(0 to 9);
-	variable br_rename_dest_var: slv6_array_t(0 to 9);
-	variable br_operand_1_var: slv16_array_t(0 to 9);
-	variable br_operand_1_valid_var: slv_array_t(0 to 9);
+	variable br_instr_valid_v: slv_array_t(0 to 9);
+	variable br_opcode_v: slv4_array_t(0 to 9);
+	variable br_org_dest_v: slv3_array_t(0 to 9);
+	variable br_rename_dest_v: slv6_array_t(0 to 9);
 
-	variable br_operand_2_var: slv16_array_t(0 to 9);
-	variable br_operand_2_valid_var: slv_array_t(0 to 9);
+	variable br_opr1_v: slv16_array_t(0 to 9);
+	variable br_opr1_valid_v: slv_array_t(0 to 9);
 
-	variable br_operand_3_var: slv16_array_t(0 to 9);
-	variable br_operand_3_valid_var: slv_array_t(0 to 9);
+	variable br_opr2_v: slv16_array_t(0 to 9);
+	variable br_opr2_valid_v: slv_array_t(0 to 9);
 
-	variable br_pc_var: slv16_array_t(0 to 9);
-	variable br_nxt_pc_var: slv16_array_t(0 to 9);
-	variable br_sch_valid_var: slv_array_t(0 to 9);
+	variable br_opr3_v: slv16_array_t(0 to 9);
+	variable br_opr3_valid_v: slv_array_t(0 to 9);
 
-	variable br_btag_var: slv3_array_t(0 to 9);
-	variable br_self_tag_var: slv3_array_t(0 to 9);
-	-------------------------------------------------------------------------------------
-	variable br_instr_valid_out_var: std_logic;
-	variable br_op_code_out_var: std_logic_vector(3 downto 0);
-	variable br_original_dest_out_var: std_logic_vector(2 downto 0);
-	variable br_rename_dest_out_var: std_logic_vector(5 downto 0);
-	variable br_operand_1_out_var: std_logic_vector(15 downto 0);
+	variable br_pc_v: slv16_array_t(0 to 9);
+	variable br_nxt_pc_v: slv16_array_t(0 to 9);
+	variable br_sch_valid_v: slv_array_t(0 to 9);
 
-	variable br_operand_2_out_var: std_logic_vector(15 downto 0);
-
-	variable br_operand_3_out_var: std_logic_vector(15 downto 0);
-
-	variable br_pc_out_var: std_logic_vector(15 downto 0);
-	variable br_nxt_pc_out_var: std_logic_vector(15 downto 0);
+	variable br_btag_v: slv3_array_t(0 to 9);
+	variable br_self_tag_v: slv3_array_t(0 to 9);
 	
-	variable br_btag_out_var: std_logic_vector(2 downto 0);
-	variable br_self_tag_out_var: std_logic_vector(2 downto 0);
+
+	variable br_instr_valid_out_v: std_logic;
+	variable br_opcode_out_v: std_logic_vector(3 downto 0);
+	variable br_org_dest_out_v: std_logic_vector(2 downto 0);
+	variable br_rename_dest_out_v: std_logic_vector(5 downto 0);
+	variable br_opr1_out_v: std_logic_vector(15 downto 0);
+	variable br_opr2_out_v: std_logic_vector(15 downto 0);
+	variable br_opr3_out_v: std_logic_vector(15 downto 0);
+
+	variable br_pc_out_v: std_logic_vector(15 downto 0);
+	variable br_nxt_pc_out_v: std_logic_vector(15 downto 0);
+	
+	variable br_btag_out_v: std_logic_vector(2 downto 0);
+	variable br_self_tag_out_v: std_logic_vector(2 downto 0);
+
 
 	begin
 		if (clk'event and clk = '1') then
@@ -158,165 +159,160 @@ begin
 				br_btag_out <= (others => '0');
 				br_self_tag_out <= (others => '0');
 			else
-				br_instr_valid_var:= br_instr_valid_in;  
-				br_op_code_var:=  br_op_code_in;
-				br_original_dest_var:=  br_original_dest_in;
-				br_rename_dest_var:=  br_rename_dest_in;
-				br_operand_1_var:=  br_operand_1_in;
-				br_operand_1_valid_var:=  br_operand_1_valid_in;
-				br_operand_2_var:=  br_operand_2_in;
-				br_operand_2_valid_var:=  br_operand_2_valid_in;
-				br_operand_3_var:=  br_operand_3_in;
-				br_operand_3_valid_var:=  br_operand_3_valid_in;
-				br_pc_var:=  br_pc_in;
-				br_nxt_pc_var:=  br_nxt_pc_in;
-				br_sch_valid_var:=  br_sch_valid_in;
-				br_btag_var:=  br_btag_in;
-				br_self_tag_var:=  br_self_tag_in;
+				br_instr_valid_v:= br_instr_valid_in;  
+				br_opcode_v:=  br_op_code_in;
+				br_org_dest_v:=  br_original_dest_in;
+				br_rename_dest_v:=  br_rename_dest_in;
+				br_opr1_v:=  br_operand_1_in;
+				br_opr1_valid_v:=  br_operand_1_valid_in;
+				br_opr2_v:=  br_operand_2_in;
+				br_opr2_valid_v:=  br_operand_2_valid_in;
+				br_opr3_v:=  br_operand_3_in;
+				br_opr3_valid_v:=  br_operand_3_valid_in;
+				br_pc_v:=  br_pc_in;
+				br_nxt_pc_v:=  br_nxt_pc_in;
+				br_sch_valid_v:=  br_sch_valid_in;
+				br_btag_v:=  br_btag_in;
+				br_self_tag_v:=  br_self_tag_in;
 				if (br_stall_in = '1') then
-					--br_instr_valid_out_var := '0';
+					--br_instr_valid_out_v := '0';
 				else
-					if (br_instr_valid_var(0) = '1' and br_sch_valid_var(0) = '1') then
-						br_instr_valid_out_var:= br_instr_valid_var(0);  
-						br_op_code_out_var:=  br_op_code_var(0);
-						br_original_dest_out_var:=  br_original_dest_var(0);
-						br_rename_dest_out_var:=  br_rename_dest_var(0);
-						br_operand_1_out_var:=  br_operand_1_var(0);
-						br_operand_2_out_var:=  br_operand_2_var(0);
-						br_operand_3_out_var:=  br_operand_3_var(0);
-						br_pc_out_var:=  br_pc_var(0);
-						br_nxt_pc_out_var:=  br_nxt_pc_var(0);
-						br_btag_out_var:=  br_btag_var(0);
-						br_self_tag_out_var:=  br_self_tag_var(0);
-					elsif (br_instr_valid_var(1) = '1' and br_sch_valid_var(1) = '1') then
-						br_instr_valid_out_var:= br_instr_valid_var(1);  
-						br_op_code_out_var:=  br_op_code_var(1);
-						br_original_dest_out_var:=  br_original_dest_var(1);
-						br_rename_dest_out_var:=  br_rename_dest_var(1);
-						br_operand_1_out_var:=  br_operand_1_var(1);
-						br_operand_2_out_var:=  br_operand_2_var(1);
-						br_operand_3_out_var:=  br_operand_3_var(1);
-						br_pc_out_var:=  br_pc_var(1);
-						br_nxt_pc_out_var:=  br_nxt_pc_var(1);
-						br_btag_out_var:=  br_btag_var(1);
-						br_self_tag_out_var:=  br_self_tag_var(1);
-					elsif (br_instr_valid_var(2) = '1' and br_sch_valid_var(2) = '1') then
-						br_instr_valid_out_var:= br_instr_valid_var(2);  
-						br_op_code_out_var:=  br_op_code_var(2);
-						br_original_dest_out_var:=  br_original_dest_var(2);
-						br_rename_dest_out_var:=  br_rename_dest_var(2);
-						br_operand_1_out_var:=  br_operand_1_var(2);
-
-						br_operand_2_out_var:=  br_operand_2_var(2);
-
-						br_operand_3_out_var:=  br_operand_3_var(2);
-
-						br_pc_out_var:=  br_pc_var(2);
-						br_nxt_pc_out_var:=  br_nxt_pc_var(2);
-						
-						br_btag_out_var:=  br_btag_var(2);
-						br_self_tag_out_var:=  br_self_tag_var(2);
-
-					elsif (br_instr_valid_var(3) = '1' and br_sch_valid_var(3) = '1') then
-						br_instr_valid_out_var:= br_instr_valid_var(3);  
-						br_op_code_out_var:=  br_op_code_var(3);
-						br_original_dest_out_var:=  br_original_dest_var(3);
-						br_rename_dest_out_var:=  br_rename_dest_var(3);
-						br_operand_1_out_var:=  br_operand_1_var(3);
-						br_operand_2_out_var:=  br_operand_2_var(3);
-						br_operand_3_out_var:=  br_operand_3_var(3);
-						br_pc_out_var:=  br_pc_var(3);
-						br_nxt_pc_out_var:=  br_nxt_pc_var(3);
-						br_btag_out_var:=  br_btag_var(3);
-						br_self_tag_out_var:=  br_self_tag_var(3);
-					elsif (br_instr_valid_var(4) = '1' and br_sch_valid_var(4) = '1') then
-						br_instr_valid_out_var:= br_instr_valid_var(4);  
-						br_op_code_out_var:=  br_op_code_var(4);
-						br_original_dest_out_var:=  br_original_dest_var(4);
-						br_rename_dest_out_var:=  br_rename_dest_var(4);
-						br_operand_1_out_var:=  br_operand_1_var(4);
-						br_operand_2_out_var:=  br_operand_2_var(4);
-						br_operand_3_out_var:=  br_operand_3_var(4);
-						br_pc_out_var:=  br_pc_var(4);
-						br_nxt_pc_out_var:=  br_nxt_pc_var(4);
-						br_btag_out_var:=  br_btag_var(4);
-						br_self_tag_out_var:=  br_self_tag_var(4);
-					elsif (br_instr_valid_var(5) = '1' and br_sch_valid_var(5) = '1') then
-						br_instr_valid_out_var:= br_instr_valid_var(5);  
-						br_op_code_out_var:=  br_op_code_var(5);
-						br_original_dest_out_var:=  br_original_dest_var(5);
-						br_rename_dest_out_var:=  br_rename_dest_var(5);
-						br_operand_1_out_var:=  br_operand_1_var(5);
-						br_operand_2_out_var:=  br_operand_2_var(5);
-						br_operand_3_out_var:=  br_operand_3_var(5);
-						br_pc_out_var:=  br_pc_var(5);
-						br_nxt_pc_out_var:=  br_nxt_pc_var(5);
-						br_btag_out_var:=  br_btag_var(5);
-						br_self_tag_out_var:=  br_self_tag_var(5);
-					elsif (br_instr_valid_var(6) = '1' and br_sch_valid_var(6) = '1') then
-						br_instr_valid_out_var:= br_instr_valid_var(6);  
-						br_op_code_out_var:=  br_op_code_var(6);
-						br_original_dest_out_var:=  br_original_dest_var(6);
-						br_rename_dest_out_var:=  br_rename_dest_var(6);
-						br_operand_1_out_var:=  br_operand_1_var(6);
-						br_operand_2_out_var:=  br_operand_2_var(6);
-						br_operand_3_out_var:=  br_operand_3_var(6);
-						br_pc_out_var:=  br_pc_var(6);
-						br_nxt_pc_out_var:=  br_nxt_pc_var(6);
-						br_btag_out_var:=  br_btag_var(6);
-						br_self_tag_out_var:=  br_self_tag_var(6);
-					elsif (br_instr_valid_var(7) = '1' and br_sch_valid_var(7) = '1') then
-						br_instr_valid_out_var:= br_instr_valid_var(7);  
-						br_op_code_out_var:=  br_op_code_var(7);
-						br_original_dest_out_var:=  br_original_dest_var(7);
-						br_rename_dest_out_var:=  br_rename_dest_var(7);
-						br_operand_1_out_var:=  br_operand_1_var(7);
-						br_operand_2_out_var:=  br_operand_2_var(7);
-						br_operand_3_out_var:=  br_operand_3_var(7);
-						br_pc_out_var:=  br_pc_var(7);
-						br_nxt_pc_out_var:=  br_nxt_pc_var(7);
-						br_btag_out_var:=  br_btag_var(7);
-						br_self_tag_out_var:=  br_self_tag_var(7);
-					elsif (br_instr_valid_var(8) = '1' and br_sch_valid_var(8) = '1') then
-						br_instr_valid_out_var:= br_instr_valid_var(8);  
-						br_op_code_out_var:=  br_op_code_var(8);
-						br_original_dest_out_var:=  br_original_dest_var(8);
-						br_rename_dest_out_var:=  br_rename_dest_var(8);
-						br_operand_1_out_var:=  br_operand_1_var(8);
-						br_operand_2_out_var:=  br_operand_2_var(8);
-						br_operand_3_out_var:=  br_operand_3_var(8);
-						br_pc_out_var:=  br_pc_var(8);
-						br_nxt_pc_out_var:=  br_nxt_pc_var(8);
-						br_btag_out_var:=  br_btag_var(8);
-						br_self_tag_out_var:=  br_self_tag_var(8);
-					elsif (br_instr_valid_var(9) = '1' and br_sch_valid_var(9) = '1') then
-						br_instr_valid_out_var:= br_instr_valid_var(9);  
-						br_op_code_out_var:=  br_op_code_var(9);
-						br_original_dest_out_var:=  br_original_dest_var(9);
-						br_rename_dest_out_var:=  br_rename_dest_var(9);
-						br_operand_1_out_var:=  br_operand_1_var(9);
-						br_operand_2_out_var:=  br_operand_2_var(9);
-						br_operand_3_out_var:=  br_operand_3_var(9);
-						br_pc_out_var:=  br_pc_var(9);
-						br_nxt_pc_out_var:=  br_nxt_pc_var(9);
-						br_btag_out_var:=  br_btag_var(9);
-						br_self_tag_out_var:=  br_self_tag_var(9);
+					if (br_instr_valid_v(0) = '1' and br_sch_valid_v(0) = '1') then
+						br_instr_valid_out_v:= br_instr_valid_v(0);  
+						br_opcode_out_v:=  br_opcode_v(0);
+						br_org_dest_out_v:=  br_org_dest_v(0);
+						br_rename_dest_out_v:=  br_rename_dest_v(0);
+						br_opr1_out_v:=  br_opr1_v(0);
+						br_opr2_out_v:=  br_opr2_v(0);
+						br_opr3_out_v:=  br_opr3_v(0);
+						br_pc_out_v:=  br_pc_v(0);
+						br_nxt_pc_out_v:=  br_nxt_pc_v(0);
+						br_btag_out_v:=  br_btag_v(0);
+						br_self_tag_out_v:=  br_self_tag_v(0);
+					elsif (br_instr_valid_v(1) = '1' and br_sch_valid_v(1) = '1') then
+						br_instr_valid_out_v:= br_instr_valid_v(1);  
+						br_opcode_out_v:=  br_opcode_v(1);
+						br_org_dest_out_v:=  br_org_dest_v(1);
+						br_rename_dest_out_v:=  br_rename_dest_v(1);
+						br_opr1_out_v:=  br_opr1_v(1);
+						br_opr2_out_v:=  br_opr2_v(1);
+						br_opr3_out_v:=  br_opr3_v(1);
+						br_pc_out_v:=  br_pc_v(1);
+						br_nxt_pc_out_v:=  br_nxt_pc_v(1);
+						br_btag_out_v:=  br_btag_v(1);
+						br_self_tag_out_v:=  br_self_tag_v(1);
+					elsif (br_instr_valid_v(2) = '1' and br_sch_valid_v(2) = '1') then
+						br_instr_valid_out_v:= br_instr_valid_v(2);  
+						br_opcode_out_v:=  br_opcode_v(2);
+						br_org_dest_out_v:=  br_org_dest_v(2);
+						br_rename_dest_out_v:=  br_rename_dest_v(2);
+						br_opr1_out_v:=  br_opr1_v(2);
+						br_opr2_out_v:=  br_opr2_v(2);
+						br_opr3_out_v:=  br_opr3_v(2);
+						br_pc_out_v:=  br_pc_v(2);
+						br_nxt_pc_out_v:=  br_nxt_pc_v(2);
+						br_btag_out_v:=  br_btag_v(2);
+						br_self_tag_out_v:=  br_self_tag_v(2);
+					elsif (br_instr_valid_v(3) = '1' and br_sch_valid_v(3) = '1') then
+						br_instr_valid_out_v:= br_instr_valid_v(3);  
+						br_opcode_out_v:=  br_opcode_v(3);
+						br_org_dest_out_v:=  br_org_dest_v(3);
+						br_rename_dest_out_v:=  br_rename_dest_v(3);
+						br_opr1_out_v:=  br_opr1_v(3);
+						br_opr2_out_v:=  br_opr2_v(3);
+						br_opr3_out_v:=  br_opr3_v(3);
+						br_pc_out_v:=  br_pc_v(3);
+						br_nxt_pc_out_v:=  br_nxt_pc_v(3);
+						br_btag_out_v:=  br_btag_v(3);
+						br_self_tag_out_v:=  br_self_tag_v(3);
+					elsif (br_instr_valid_v(4) = '1' and br_sch_valid_v(4) = '1') then
+						br_instr_valid_out_v:= br_instr_valid_v(4);  
+						br_opcode_out_v:=  br_opcode_v(4);
+						br_org_dest_out_v:=  br_org_dest_v(4);
+						br_rename_dest_out_v:=  br_rename_dest_v(4);
+						br_opr1_out_v:=  br_opr1_v(4);
+						br_opr2_out_v:=  br_opr2_v(4);
+						br_opr3_out_v:=  br_opr3_v(4);
+						br_pc_out_v:=  br_pc_v(4);
+						br_nxt_pc_out_v:=  br_nxt_pc_v(4);
+						br_btag_out_v:=  br_btag_v(4);
+						br_self_tag_out_v:=  br_self_tag_v(4);
+					elsif (br_instr_valid_v(5) = '1' and br_sch_valid_v(5) = '1') then
+						br_instr_valid_out_v:= br_instr_valid_v(5);  
+						br_opcode_out_v:=  br_opcode_v(5);
+						br_org_dest_out_v:=  br_org_dest_v(5);
+						br_rename_dest_out_v:=  br_rename_dest_v(5);
+						br_opr1_out_v:=  br_opr1_v(5);
+						br_opr2_out_v:=  br_opr2_v(5);
+						br_opr3_out_v:=  br_opr3_v(5);
+						br_pc_out_v:=  br_pc_v(5);
+						br_nxt_pc_out_v:=  br_nxt_pc_v(5);
+						br_btag_out_v:=  br_btag_v(5);
+						br_self_tag_out_v:=  br_self_tag_v(5);
+					elsif (br_instr_valid_v(6) = '1' and br_sch_valid_v(6) = '1') then
+						br_instr_valid_out_v:= br_instr_valid_v(6);  
+						br_opcode_out_v:=  br_opcode_v(6);
+						br_org_dest_out_v:=  br_org_dest_v(6);
+						br_rename_dest_out_v:=  br_rename_dest_v(6);
+						br_opr1_out_v:=  br_opr1_v(6);
+						br_opr2_out_v:=  br_opr2_v(6);
+						br_opr3_out_v:=  br_opr3_v(6);
+						br_pc_out_v:=  br_pc_v(6);
+						br_nxt_pc_out_v:=  br_nxt_pc_v(6);
+						br_btag_out_v:=  br_btag_v(6);
+						br_self_tag_out_v:=  br_self_tag_v(6);
+					elsif (br_instr_valid_v(7) = '1' and br_sch_valid_v(7) = '1') then
+						br_instr_valid_out_v:= br_instr_valid_v(7);  
+						br_opcode_out_v:=  br_opcode_v(7);
+						br_org_dest_out_v:=  br_org_dest_v(7);
+						br_rename_dest_out_v:=  br_rename_dest_v(7);
+						br_opr1_out_v:=  br_opr1_v(7);
+						br_opr2_out_v:=  br_opr2_v(7);
+						br_opr3_out_v:=  br_opr3_v(7);
+						br_pc_out_v:=  br_pc_v(7);
+						br_nxt_pc_out_v:=  br_nxt_pc_v(7);
+						br_btag_out_v:=  br_btag_v(7);
+						br_self_tag_out_v:=  br_self_tag_v(7);
+					elsif (br_instr_valid_v(8) = '1' and br_sch_valid_v(8) = '1') then
+						br_instr_valid_out_v:= br_instr_valid_v(8);  
+						br_opcode_out_v:=  br_opcode_v(8);
+						br_org_dest_out_v:=  br_org_dest_v(8);
+						br_rename_dest_out_v:=  br_rename_dest_v(8);
+						br_opr1_out_v:=  br_opr1_v(8);
+						br_opr2_out_v:=  br_opr2_v(8);
+						br_opr3_out_v:=  br_opr3_v(8);
+						br_pc_out_v:=  br_pc_v(8);
+						br_nxt_pc_out_v:=  br_nxt_pc_v(8);
+						br_btag_out_v:=  br_btag_v(8);
+						br_self_tag_out_v:=  br_self_tag_v(8);
+					elsif (br_instr_valid_v(9) = '1' and br_sch_valid_v(9) = '1') then
+						br_instr_valid_out_v:= br_instr_valid_v(9);  
+						br_opcode_out_v:=  br_opcode_v(9);
+						br_org_dest_out_v:=  br_org_dest_v(9);
+						br_rename_dest_out_v:=  br_rename_dest_v(9);
+						br_opr1_out_v:=  br_opr1_v(9);
+						br_opr2_out_v:=  br_opr2_v(9);
+						br_opr3_out_v:=  br_opr3_v(9);
+						br_pc_out_v:=  br_pc_v(9);
+						br_nxt_pc_out_v:=  br_nxt_pc_v(9);
+						br_btag_out_v:=  br_btag_v(9);
+						br_self_tag_out_v:=  br_self_tag_v(9);
 					else
-						br_instr_valid_out_var := '0';
+						br_instr_valid_out_v := '0';
 					end if ;
 				end if ;
 
-				br_instr_valid_out <= br_instr_valid_out_var;
-				br_op_code_out <= br_op_code_out_var;
-				br_original_dest_out <= br_original_dest_out_var;
-				br_rename_dest_out <= br_rename_dest_out_var;
-				br_operand_1_out <= br_operand_1_out_var;
-				br_operand_2_out <= br_operand_2_out_var;
-				br_operand_3_out <= br_operand_3_out_var;
-				br_pc_out <= br_pc_out_var;
-				br_nxt_pc_out <= br_nxt_pc_out_var;
-				br_btag_out <= br_btag_out_var;
-				br_self_tag_out <= br_self_tag_out_var;
+				br_instr_valid_out <= br_instr_valid_out_v;
+				br_op_code_out <= br_opcode_out_v;
+				br_original_dest_out <= br_org_dest_out_v;
+				br_rename_dest_out <= br_rename_dest_out_v;
+				br_operand_1_out <= br_opr1_out_v;
+				br_operand_2_out <= br_opr2_out_v;
+				br_operand_3_out <= br_opr3_out_v;
+				br_pc_out <= br_pc_out_v;
+				br_nxt_pc_out <= br_nxt_pc_out_v;
+				br_btag_out <= br_btag_out_v;
+				br_self_tag_out <= br_self_tag_out_v;
 
 			end if ;
 		
