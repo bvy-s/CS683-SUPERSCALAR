@@ -9,7 +9,7 @@ entity bit16_2x1 is
            o   : out std_logic_vector(15 downto 0));
 end bit16_2x1;
 
-architecture behviour of bit16_2x1 is
+architecture behaviour of bit16_2x1 is
 begin
 	process(d_0,d_1,c_0)
 	begin
