@@ -17,7 +17,7 @@ architecture arch of c_reg is
 	signal c_data_signal: std_logic;
 begin
 
-C_reg : process(clk,c_data_in,c_valid,reset)
+C_reg_proc : process(clk,c_data_in,c_valid,reset)
 
 begin
 	if (clk'event and clk = '1') then

@@ -1580,7 +1580,7 @@ process(reset_system,clk_input,stall_reservation_update,halt_out_internal,op_cod
 
                                                                                                                      --only updates the arf table not anything else
 
-  variable i:integer range 0 to 7;
+  --variable i:integer range 0 to 7;
 
   --variable free_reg_var:
   
@@ -1722,7 +1722,7 @@ process(reset_system,clk_input,stall_reservation_update,halt_out_internal,op_cod
 
                                                                                                                      --only updates the arf table not anything else
 
-  variable i:integer range 0 to 7;
+  --variable i:integer range 0 to 7;
 
   --variable free_reg_var:
   
@@ -1807,7 +1807,7 @@ process(reset_system,clk_input,stall_reservation_update,halt_out_internal,op_cod
 
                                                                                                                      --only updates the arf table not anything else
 
-  variable i:integer range 0 to 7;
+  --variable i:integer range 0 to 7;
 
   --variable free_reg_var:
   
@@ -2896,7 +2896,7 @@ process(reset_system,clk_input,stall_reservation_update,halt_out_internal,op_cod
 
 process(reset_system,clk_input,stall_reservation_update,halt_out_internal)--updateds AL entries in reservation station
                        -------This checks each entry in RS and tries to update each entry in case of broadcast or during entry from decode state
- variable i:integer range 0 to 9;
+ --variable i:integer range 0 to 9;
  begin
 
  for i in 0 to 9 loop
@@ -3271,7 +3271,7 @@ end process;
  
 process(reset_system,clk_input,stall_reservation_update,halt_out_internal,branch1_done)--updateds AL entries in reservation station
                        -------This checks each entry in RS and tries to update each entry in case of broadcast or during entry from decode state
- variable i:integer range 0 to 9;
+ --variable i:integer range 0 
  begin
 
  for i in 0 to 9 loop
@@ -3502,7 +3502,7 @@ end process;
 
 process(reset_system,clk_input,stall_reservation_update,halt_out_internal,branch2_done)--updateds AL entries in reservation station
                        -------This checks each entry in RS and tries to update each entry in case of broadcast or during entry from decode state
- variable i:integer range 0 to 9;
+ --variable i:integer range 0 
  begin
 
  for i in 0 to 9 loop
@@ -3735,7 +3735,7 @@ end process;
 
 process(reset_system,clk_input,stall_reservation_update,halt_out_internal)--ls part in RS
                        -------This checks each entry in RS and tries to update each entry in case of broadcast or during entry from decode state
- variable i:integer range 0 to 9;
+ --variable i:integer range 0 
  begin
 
  for i in 0 to 9 loop
@@ -3980,7 +3980,7 @@ end process;
 
 process(reset_system,clk_input,stall_reservation_update,halt_out_internal)--ls part in RS
                        -------This checks each entry in RS and tries to update each entry in case of broadcast or during entry from decode state
- variable i:integer range 0 to 9;
+ --variable i:integer range 0 
  begin
 
  for i in 0 to 9 loop
@@ -4119,7 +4119,7 @@ end process;
 
 process(reset_system,clk_input,stall_reservation_update,halt_out_internal)--ls part in RS
                        -------This checks each entry in RS and tries to update each entry in case of broadcast or during entry from decode state
- variable i:integer range 0 to 9;
+ --variable i:integer range 0 
  begin
 
  for i in 0 to 9 loop
@@ -4267,7 +4267,7 @@ end process;
 process(reset_system,clk_input,stall_reservation_update,halt_out_internal )  --- jmp part in RS--
 
                        -------This checks each entry in RS and tries to update each entry in case of broadcast or during entry from decode state
- variable i:integer range 0 to 9;
+ --variable i:integer range 0 
  begin
 
  for i in 0 to 9 loop
@@ -4570,7 +4570,7 @@ end process;
 process(reset_system,clk_input,stall_reservation_update,halt_out_internal )  --- jmp part in RS--
 
                        -------This checks each entry in RS and tries to update each entry in case of broadcast or during entry from decode state
- variable i:integer range 0 to 9;
+ --variable i:integer range 0 
  begin
 
  for i in 0 to 9 loop
@@ -4722,7 +4722,7 @@ end process;
 process(reset_system,clk_input,stall_reservation_update,halt_out_internal )  --- jmp part in RS--
 
                        -------This checks each entry in RS and tries to update each entry in case of broadcast or during entry from decode state
- variable i:integer range 0 to 9;
+ --variable i:integer range 0 
  begin
 
  for i in 0 to 9 loop
@@ -4878,7 +4878,7 @@ end process;
 process(alu_instr_valid_out_internal,alu_op_code_out_internal,alu_valid1_out_internal,alu_valid2_out_internal,alu_valid3_out_internal,alu_op_code_cz_out_internal,alu_c_flag_valid_out_internal
          ,alu_z_flag_valid_out_internal ) --to drive alu_scheduler_valid_out
 
- variable i: integer range 0 to 9;
+ --variable i: integer range 0 to 9;
  
  begin
 
@@ -4940,7 +4940,7 @@ end process;
 
 process (ls_instr_valid_out_internal,ls_op_code_out_internal,ls_valid1_out_internal,ls_valid2_out_internal,ls_valid3_out_internal)
 
-variable i: integer range 0 to 9;
+--variable i: integer range 0 to 9;
  
  
  begin
@@ -4986,7 +4986,7 @@ end process;
 
 process (jmp_instr_valid_out_internal,jmp_op_code_out_internal,jmp_valid1_out_internal,jmp_valid2_out_internal,jmp_valid3_out_internal)--controls validity of jmp instructions
 
-variable i: integer range 0 to 9;
+--variable i: integer range 0 to 9;
 
  begin
 

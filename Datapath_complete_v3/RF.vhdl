@@ -13,39 +13,39 @@ architecture behave of RF is
 
 type registerfile is array(0 to 7) of std_logic_vector(15 downto 0);
 
-signal rf:registerfile:=(others=>(others=>'0'));
+signal reg_f:registerfile:=(others=>(others=>'0'));
 
 begin
-d1 <= rf(to_integer(unsigned(a1)));
-d2 <= rf(to_integer(unsigned(a2)));
+d1 <= reg_f(to_integer(unsigned(a1)));
+d2 <= reg_f(to_integer(unsigned(a2)));
 
-r0 <= rf(0);
-r1 <= rf(1);
-r2 <= rf(2);
-r3 <= rf(3);
-r4 <= rf(4);
-r5 <= rf(5);
-r6 <= rf(6);
-r7 <= rf(7);
+r0 <= reg_f(0);
+r1 <= reg_f(1);
+r2 <= reg_f(2);
+r3 <= reg_f(3);
+r4 <= reg_f(4);
+r5 <= reg_f(5);
+r6 <= reg_f(6);
+r7 <= reg_f(7);
 
 RF_write:process(clk,reset)
 begin 
 	
 	if (reset='1') then
 	
-	 rf(0) <=(others => '0');
-	 rf(1) <=(others => '0');
-	 rf(2) <=(others =>'0');
-	 rf(3) <=(others => '0');
-	 rf(4) <= (others => '0');
-	 rf(5) <= (others => '0');
-	 rf(6) <= (others => '0');
-	 rf(7) <= (others => '0');
+	 reg_f(0) <=(others => '0');
+	 reg_f(1) <=(others => '0');
+	 reg_f(2) <=(others =>'0');
+	 reg_f(3) <=(others => '0');
+	 reg_f(4) <= (others => '0');
+	 reg_f(5) <= (others => '0');
+	 reg_f(6) <= (others => '0');
+	 reg_f(7) <= (others => '0');
 	
 	elsif(clk'event and clk = '1') then
 		
 		if (we_rf = '1') then
-		 	rf(to_integer(unsigned(a3))) <= d3;
+		 	reg_f(to_integer(unsigned(a3))) <= d3;
 		end if ;
 
 	end if;

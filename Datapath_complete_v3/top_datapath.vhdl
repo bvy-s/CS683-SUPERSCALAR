@@ -1,7 +1,6 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
-library work;
 
 package pkg is
   type slv8_array_t is array (natural range <>) of std_logic_vector(7 downto 0);

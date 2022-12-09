@@ -17,7 +17,7 @@ architecture arch of z_reg is
 	signal z_data_signal: std_logic;
 begin
 
-Z_REG : process(clk,z_data_in,z_valid,reset)
+Z_REG_proc : process(clk,z_data_in,z_valid,reset)
 
 begin
 	if (clk'event and clk = '1') then
