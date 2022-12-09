@@ -1,7 +1,6 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
-library work;
 
 package pkg is
   type slv8_array_t is array (natural range <>) of std_logic_vector(7 downto 0);
@@ -27,7 +26,7 @@ use work.pkg.all;
 
 
 
-entity top_datapath is 
+entity top_level is 
 
 port (
 
@@ -49,7 +48,7 @@ port (
 end entity;
 
 
-architecture struct of top_datapath is
+architecture struct of top_level is
 
 component memory_code is
 
