@@ -29,20 +29,10 @@ use work.pkg.all;
 entity top_datapath is 
 
 port (
-
-   top_clock:in std_logic;
-   system_reset:in std_logic;-----------------------------------active high system reset
-   r0_out: out std_logic_vector(15 downto 0);
-   r1_out: out std_logic_vector(15 downto 0);
-   r2_out: out std_logic_vector(15 downto 0);
-   r3_out: out std_logic_vector(15 downto 0);
-   r4_out: out std_logic_vector(15 downto 0);
-   r5_out: out std_logic_vector(15 downto 0);
-   r6_out: out std_logic_vector(15 downto 0);
-   r7_out: out std_logic_vector(15 downto 0);
-   --curr_pc: out std_logic_vector(15 downto 0);
-   c_reg_data_out: out std_logic;
-   z_reg_data_out: out std_logic
+      top_clock:in std_logic;
+      system_reset:in std_logic;
+      c_reg_data_out: out std_logic;
+      z_reg_data_out: out std_logic
    );
 
 end entity;
@@ -842,7 +832,7 @@ component RF is
 	port(a1, a2, a3:in std_logic_vector(2 downto 0); 
 		clk,we_rf,reset:in std_logic;
 		d3: in std_logic_vector(15 downto 0); 
-		d1, d2, r0, r1, r2, r3, r4, r5, r6, r7:out std_logic_vector(15 downto 0));
+		d1, d2:out std_logic_vector(15 downto 0));
 end component;
 -------------------------------------------------------------------------------------------------------------------------------------------------
 component c_reg is
@@ -2199,15 +2189,7 @@ REGISTER_FILE: RF port map
 		 reset => system_reset,
 		 d3 => rob_rf_data_out, 
 		 d1 => rf_d1, 
-		 d2 => rf_d2, 
-		 r0 => r0_out, 
-		 r1 => r1_out,
-		 r2 => r2_out, 
-		 r3 => r3_out,
-		 r4 => r4_out, 
-		 r5 => r5_out, 
-		 r6 => r6_out, 
-		 r7 => r7_out
+		 d2 => rf_d2
 		);
 ------------------------------------------------------------------------------------------------------------------------------------------
 C_REGISTER:c_reg port map 
