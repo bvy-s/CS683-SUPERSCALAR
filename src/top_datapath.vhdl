@@ -52,7 +52,8 @@ architecture struct of top_datapath is
 
 component memory_code is
 
-port  (clk : in std_logic;  
+port  (clk : in std_logic;
+      reset : in std_logic;  
         we  : in std_logic;   
         a   : in std_logic_vector(15 downto 0);   
         di  : in std_logic_vector(15 downto 0);   
@@ -831,7 +832,7 @@ end component ; -- rob
 component memory_data is 
   port (clk : in std_logic;  
         we  : in std_logic;
-        --rd	: in std_logic;   
+        reset : in std_logic;    
         a   : in std_logic_vector(15 downto 0);   
         di  : in std_logic_vector(15 downto 0);   
         do  : out std_logic_vector(15 downto 0));   
@@ -1346,6 +1347,7 @@ end component ; -- z_reg
 
                         (
                           clk=>top_clock,
+                          reset=>system_reset,
                           we=>'0',
                           a=>addr_to_mem,
                           do=>code_mem,
@@ -2182,7 +2184,7 @@ DATA_MEM: memory_data port map
 		(
 		clk => top_clock,  
         we => rob_mem_write_en,
-        --rd	: in std_logic;   
+        reset => system_reset,   
         a => rob_mem_dest_add,   
         di => rob_mem_dest_data_out,   
         do  => rob_mem_data_in
