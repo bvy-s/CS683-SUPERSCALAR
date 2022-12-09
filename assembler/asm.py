@@ -9,7 +9,7 @@ parser = argparse.ArgumentParser(prog='assembler',
 
 parser.add_argument('inputfile', metavar='inputfile', type=str,help='input file path')
 parser.add_argument('-o',help='output file name,defaults to a.txt',default="a.txt")
-parser.add_argument('-f',help='file format,defaults to hex',choices =['bin','hex'], default="hex")
+parser.add_argument('-f',help='file format,defaults to hex',choices =['bin','hex'], default="bin")
 
 
 args = parser.parse_args()
