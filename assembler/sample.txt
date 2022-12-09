@@ -1,0 +1,21 @@
+ADC R2 R3 R7
+ADZ R1 R3 R7
+ADL R4 R3 R7
+ADI R4 R3 #1ah
+*Hmmm
+ADC R5 R3 R7
+
+NDU R6 R3 R3
+
+NDZ R1 R6 R4
+LHI R7 #2 *nice -- needs some changes
+
+LW  R4 R6 #4d
+SW  R3 R7 #4
+LM  R1 #3D
+SM  R4 #9d
+BEQ R2 R2 #4
+JAL R2 #2
+JLR R2 R3
+JRI R2 #9D
+ADI R4 R3 #0010101b

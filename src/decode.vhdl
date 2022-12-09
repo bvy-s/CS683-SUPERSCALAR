@@ -60,7 +60,7 @@ begin
 			stall_out_v := '0';
 		else
 			if (inst_2_valid_in = '1') then
-				if(Instr2_in(15 downto 12) = "1100" or Instr2_in(15 downto 12) = "1000" or Instr2_in(15 downto 12) = "1001") then
+				if(Instr2_in(15 downto 12) = "1000" or Instr2_in(15 downto 12) = "1001" or Instr2_in(15 downto 12) = "1010") then
 					if (current_BTAG = "011") then
 						stall_out_v := '1';
 					else
@@ -159,7 +159,7 @@ begin
 					else
 						if (inst_1_valid_in = '1') then
 							case(Instr1_in(15 downto 12)) is
-								when "0000" =>
+								when "0001" =>
 								--ADD/ADC/ADZ
 								I1_valid_v := inst_1_valid_in;
 								I1_opcode_v := Instr1_in(15 downto 12);
@@ -185,7 +185,7 @@ begin
 								I1_Nxt_PC_v := std_logic_vector(unsigned(PC_in) + 1);
 								I1_BTAG_v := current_BTAG_v;
 								I1_self_tag_v := "000";
-								when "0001" =>
+								when "1111" =>
 								-- ADI
 								I1_valid_v := inst_1_valid_in;
 								I1_opcode_v := Instr1_in(15 downto 12);
@@ -198,7 +198,7 @@ begin
 								I1_Nxt_PC_v := std_logic_vector(unsigned(PC_in) + 1);
 								I1_BTAG_v := current_BTAG_v;
 								I1_self_tag_v := "000";	
-								when "0011" =>
+								when "1110" =>
 								-- LHI
 								I1_valid_v := inst_1_valid_in;
 								I1_opcode_v := Instr1_in(15 downto 12);
@@ -211,7 +211,7 @@ begin
 								I1_Nxt_PC_v := std_logic_vector(unsigned(PC_in) + 1);
 								I1_BTAG_v := current_BTAG_v;
 								I1_self_tag_v := "000";
-								when "0100" =>
+								when "0111" =>
 								-- LW
 								I1_valid_v := inst_1_valid_in;
 								I1_opcode_v := Instr1_in(15 downto 12);
@@ -265,7 +265,7 @@ begin
 						end if ;
 						if (inst_2_valid_in = '1') then
 							case(Instr2_in(15 downto 12)) is
-								when "0000" =>
+								when "0001" =>
 								--ADD/ADC/ADZ
 								I2_valid_v := inst_2_valid_in;
 								I2_opcode_v := Instr2_in(15 downto 12);
@@ -291,7 +291,7 @@ begin
 								I2_Nxt_PC_v := Nxt_PC_in;
 								I2_BTAG_v := current_BTAG_v;
 								I2_self_tag_v := "000";
-								when "0001" =>
+								when "1111" =>
 								-- ADI
 								I2_valid_v := inst_2_valid_in;
 								I2_opcode_v := Instr2_in(15 downto 12);
@@ -304,7 +304,7 @@ begin
 								I2_Nxt_PC_v := Nxt_PC_in;
 								I2_BTAG_v := current_BTAG_v;
 								I2_self_tag_v := "000";
-								when "0011" =>
+								when "1110" =>
 								-- LHI
 								I2_valid_v := inst_2_valid_in;
 								I2_opcode_v := Instr2_in(15 downto 12);
@@ -317,7 +317,7 @@ begin
 								I2_Nxt_PC_v := Nxt_PC_in;
 								I2_BTAG_v := current_BTAG_v;
 								I2_self_tag_v := "000";
-								when "0100" =>
+								when "0111" =>
 								-- LW
 								I2_valid_v := inst_2_valid_in;
 								I2_opcode_v := Instr2_in(15 downto 12);
@@ -343,7 +343,7 @@ begin
 								I2_Nxt_PC_v := Nxt_PC_in;
 								I2_BTAG_v := current_BTAG_v;
 								I2_self_tag_v := "000";
-								when "1100" =>
+								when "1000" =>
 								-- BEQ
 								I2_valid_v := inst_2_valid_in;
 								I2_opcode_v := Instr2_in(15 downto 12);
@@ -380,7 +380,7 @@ begin
 									current_BTAG_v := "111";
 									I2_self_tag_v := "111";
 								end if;
-								when "1000" =>
+								when "1001" =>
 								-- JAL
 								I2_valid_v := inst_2_valid_in;
 								I2_opcode_v := Instr2_in(15 downto 12);
@@ -417,7 +417,7 @@ begin
 									current_BTAG_v := "111";
 									I2_self_tag_v := "111";
 								end if;
-								when "1001" =>
+								when "1010" =>
 								-- JLR
 								I2_valid_v := inst_2_valid_in;
 								I2_opcode_v := Instr2_in(15 downto 12);
