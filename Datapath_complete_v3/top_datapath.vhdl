@@ -14,7 +14,7 @@ package pkg is
 end package;
 
 package body pkg is
-end package body;
+end pkg;
 
 
 library ieee;
