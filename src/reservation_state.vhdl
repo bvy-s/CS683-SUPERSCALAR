@@ -6,297 +6,292 @@ use work.pkg.all;
 
 
 
-entity reservation_state is
-
- port (instr1_valid_in:in std_logic;
- 	   op_code1_in:in std_logic_vector(3 downto 0);
- 	   op_cz1_in: in std_logic_vector(1 downto 0);
- 	   destn_code1_in:in std_logic_vector(2 downto 0);
- 	   opr1_code1_in:in std_logic_vector(2 downto 0);
- 	   opr2_code1_in:in std_logic_vector(2 downto 0);
-		opr3_code1_in:in std_logic_vector(2 downto 0);
- 	   curr_pc1_in: in std_logic_vector(15 downto 0);
- 	   next_pc1_in:in std_logic_vector(15 downto 0);
- 	   imm1_in:in std_logic_vector(15 downto 0);
- 	   btag1_in:in std_logic_vector(2 downto 0);
- 	   self1_tag_in:in std_logic_vector(2 downto 0);
-
-       instr2_valid_in:in std_logic;
- 	   op_code2_in:in std_logic_vector(3 downto 0);
- 	   op_cz2_in: in std_logic_vector(1 downto 0);
- 	   destn_code2_in:in std_logic_vector(2 downto 0);
- 	   opr1_code2_in:in std_logic_vector(2 downto 0);
- 	   opr2_code2_in:in std_logic_vector(2 downto 0);
-		opr3_code2_in:in std_logic_vector(2 downto 0);
- 	   curr_pc2_in: in std_logic_vector(15 downto 0);
- 	   next_pc2_in:in std_logic_vector(15 downto 0);
- 	   imm2_in:in std_logic_vector(15 downto 0);
- 	   btag2_in:in std_logic_vector(2 downto 0);
- 	   self2_tag_in:in std_logic_vector(2 downto 0);
-
-       alu_valid_done1_in:in std_logic;
-       alu_done_number1:in std_logic_vector(3 downto 0);
-
-       alu_valid_done2_in:in std_logic;
-       alu_done_number2:in std_logic_vector(3 downto 0);
-
-       ls_valid_done_in:in std_logic;
-       ls_done_number:in std_logic_vector(3 downto 0);
+entity RS is
 
-       jmp_valid_done_in:in std_logic;
-       jmp_done_number:in std_logic_vector(3 downto 0);
+    port (
+      instr1_valid_in:in std_logic;
+      op_code1_in:in std_logic_vector(3 downto 0);
+      op_cz1_in: in std_logic_vector(1 downto 0);
+      destn_code1_in:in std_logic_vector(2 downto 0);
+      opr1_code1_in:in std_logic_vector(2 downto 0);
+      opr2_code1_in:in std_logic_vector(2 downto 0);
+      opr3_code1_in:in std_logic_vector(2 downto 0);
+      curr_pc1_in: in std_logic_vector(15 downto 0);
+      next_pc1_in:in std_logic_vector(15 downto 0);
+      imm1_in:in std_logic_vector(15 downto 0);
+      btag1_in:in std_logic_vector(2 downto 0);
+      self1_tag_in:in std_logic_vector(2 downto 0);
 
-         
+      instr2_valid_in:in std_logic;
+      op_code2_in:in std_logic_vector(3 downto 0);
+      op_cz2_in: in std_logic_vector(1 downto 0);
+      destn_code2_in:in std_logic_vector(2 downto 0);
+      opr1_code2_in:in std_logic_vector(2 downto 0);
+      opr2_code2_in:in std_logic_vector(2 downto 0);
+      opr3_code2_in:in std_logic_vector(2 downto 0);
+      curr_pc2_in: in std_logic_vector(15 downto 0);
+      next_pc2_in:in std_logic_vector(15 downto 0);
+      imm2_in:in std_logic_vector(15 downto 0);
+      btag2_in:in std_logic_vector(2 downto 0);
+      self2_tag_in:in std_logic_vector(2 downto 0);
 
- 	   reset_system:in std_logic;--to be done at start of cycle general reset which assigns all registers its original values
- 	   --reset_system_mapping:in std_logic;--to be used to clear all assigned ARF and RRF's 
-       clk_input:in std_logic;
-       stall_reservation_update:in std_logic;--no data comes to reservation station if becomes 1
+      alu_valid_done1_in:in std_logic;
+      alu_done_number1:in std_logic_vector(3 downto 0);
 
+      alu_valid_done2_in:in std_logic;
+      alu_done_number2:in std_logic_vector(3 downto 0);
 
+      ls_valid_done_in:in std_logic;
+      ls_done_number:in std_logic_vector(3 downto 0);
 
+      jmp_valid_done_in:in std_logic;
+      jmp_done_number:in std_logic_vector(3 downto 0);
 
-       broadcast1_rename_in:in std_logic_vector(5 downto 0);--refers to rename register broadcasted
-       broadcast1_orig_destn_in:in std_logic_vector(2 downto 0);--used if a broadcast signal matches with arrival of other instr with same src register
-       broadcast1_data_in:in std_logic_vector(15 downto 0); --refers to data of rename register broadcasted
-       broadcast1_valid_in: in std_logic;--refers whether broadcasted data is valid or not
+      reset_system:in std_logic;
+      clk_input:in std_logic;
+      stall_reservation_update:in std_logic;--no data comes to reservation station if becomes 1s
 
-       broadcast1_c_flag_in:in std_logic;
-       broadcast1_c_flag_rename_in:in std_logic_vector(2 downto 0);
-       broadcast1_c_flag_valid_in:in std_logic;
+      broadcast1_rename_in:in std_logic_vector(5 downto 0);--rename register
+      broadcast1_orig_destn_in:in std_logic_vector(2 downto 0);-- if a broadcast signal matches with arrival of other instr with same src register
+      broadcast1_data_in:in std_logic_vector(15 downto 0); --data of rename register broadcasted
+      broadcast1_valid_in: in std_logic;--validity of broadcasted data
 
-       broadcast1_z_flag_in:in std_logic;
-       broadcast1_z_flag_rename_in:in std_logic_vector(2 downto 0);
-       broadcast1_z_flag_valid_in:in std_logic;
+      broadcast1_c_flag_in:in std_logic;
+      broadcast1_c_flag_rename_in:in std_logic_vector(2 downto 0);
+      broadcast1_c_flag_valid_in:in std_logic;
 
-       broadcast1_btag_in: in std_logic_vector(2 downto 0);--refers to btag of branch signal useful for updating branch copies
-       
+      broadcast1_z_flag_in:in std_logic;
+      broadcast1_z_flag_rename_in:in std_logic_vector(2 downto 0);
+      broadcast1_z_flag_valid_in:in std_logic;
 
+      broadcast1_btag_in: in std_logic_vector(2 downto 0);--refers to btag of branch signal useful for updating branch copies
 
-       broadcast2_rename_in:in std_logic_vector(5 downto 0);--refers to rename register broadcasted
-       broadcast2_orig_destn_in:in std_logic_vector(2 downto 0);--used if a broadcast signal matches with arrival of other instr with same src register
-       broadcast2_data_in:in std_logic_vector(15 downto 0); --refers to data of rename register broadcasted
-       broadcast2_valid_in: in std_logic;--refers whether broadcasted data is valid or not 
-       
 
-       broadcast2_c_flag_in:in std_logic;
-       broadcast2_c_flag_rename_in:in std_logic_vector(2 downto 0);
-       broadcast2_c_flag_valid_in:in std_logic;
 
-       broadcast2_z_flag_in:in std_logic;
-       broadcast2_z_flag_rename_in:in std_logic_vector(2 downto 0);
-       broadcast2_z_flag_valid_in:in std_logic;
+      broadcast2_rename_in:in std_logic_vector(5 downto 0);--refers to rename register broadcasted
+      broadcast2_orig_destn_in:in std_logic_vector(2 downto 0);--used if a broadcast signal matches with arrival of other instr with same src register
+      broadcast2_data_in:in std_logic_vector(15 downto 0); --refers to data of rename register broadcasted
+      broadcast2_valid_in: in std_logic;--refers whether broadcasted data is valid or not 
 
-       broadcast2_btag_in:in std_logic_vector(2 downto 0);--refers to btag of branch signal useful for updating branch copies
 
+      broadcast2_c_flag_in:in std_logic;
+      broadcast2_c_flag_rename_in:in std_logic_vector(2 downto 0);
+      broadcast2_c_flag_valid_in:in std_logic;
 
-       broadcast3_rename_in:in std_logic_vector(5 downto 0);--refers to rename register broadcasted
-       broadcast3_orig_destn_in:in std_logic_vector(2 downto 0);--used if a broadcast signal matches with arrival of other instr with same src register
-       broadcast3_data_in:in std_logic_vector(15 downto 0); --refers to data of rename register broadcasted
-       broadcast3_valid_in: in std_logic;--refers whether broadcasted data is valid or not 
-       -- 
-       broadcast3_btag_in:in std_logic_vector(2 downto 0);--refers to btag of branch signal useful for updating branch copies
-       
-       
-       broadcast4_rename_in:in std_logic_vector(5 downto 0);--refers to rename register broadcasted
-       broadcast4_orig_destn_in:in std_logic_vector(2 downto 0);--used if a broadcast signal matches with arrival of other instr with same src register
-       broadcast4_data_in:in std_logic_vector(15 downto 0); --refers to data of rename register broadcasted
-       broadcast4_valid_in: in std_logic;--refers whether broadcasted data is valid or not 
-       
-       
-       broadcast4_c_flag_in:in std_logic;
-       broadcast4_c_flag_rename_in:in std_logic_vector(2 downto 0);
-       broadcast4_c_flag_valid_in:in std_logic;
+      broadcast2_z_flag_in:in std_logic;
+      broadcast2_z_flag_rename_in:in std_logic_vector(2 downto 0);
+      broadcast2_z_flag_valid_in:in std_logic;
 
-       broadcast4_z_flag_in:in std_logic;
-       broadcast4_z_flag_rename_in:in std_logic_vector(2 downto 0);
-       broadcast4_z_flag_valid_in:in std_logic;
+      broadcast2_btag_in:in std_logic_vector(2 downto 0);--refers to btag of branch signal useful for updating branch copies
 
-       broadcast4_btag_in:in std_logic_vector(2 downto 0);--refers to btag of branch signal useful for updating branch copies
 
-       branch_mispredict_broadcast_in:in std_logic_vector(1 downto 0); --00 implies no misprediction 01 implies first branch mispredicted 10 implies second branch mispredicted
+      broadcast3_rename_in:in std_logic_vector(5 downto 0);--refers to rename register broadcasted
+      broadcast3_orig_destn_in:in std_logic_vector(2 downto 0);--used if a broadcast signal matches with arrival of other instr with same src register
+      broadcast3_data_in:in std_logic_vector(15 downto 0); --refers to data of rename register broadcasted
+      broadcast3_valid_in: in std_logic;--refers whether broadcasted data is valid or not 
+      -- 
+      broadcast3_btag_in:in std_logic_vector(2 downto 0);--refers to btag of branch signal useful for updating branch copies
 
 
-       broadcast5_rename_in:in std_logic_vector(5 downto 0);
-       broadcast5_orig_destn_in:in std_logic_vector(2 downto 0);--used if a broadcast signal matches with arrival of other instr with same src register 
-       broadcast5_data_in:in std_logic_vector(15 downto 0); --refers to data of rename register broadcasted
-       broadcast5_valid_in: in std_logic;--refers whether broadcasted data is valid or not \
-       broadcast5_btag_in:in std_logic_vector(2 downto 0);
-       
+      broadcast4_rename_in:in std_logic_vector(5 downto 0);--refers to rename register broadcasted
+      broadcast4_orig_destn_in:in std_logic_vector(2 downto 0);--used if a broadcast signal matches with arrival of other instr with same src register
+      broadcast4_data_in:in std_logic_vector(15 downto 0); --refers to data of rename register broadcasted
+      broadcast4_valid_in: in std_logic;--refers whether broadcasted data is valid or not 
 
-       --ARF and zero and carry flags status
 
-       arf_rename_valid_out:out slv_array_t(0 to 7);-- not required if value is valid rename cannot be valid
---signal arf_reg_name:array(0 to 29) of std_logic_vector(2 downto 0);
-       arf_reg_rename_out:out slv6_array_t(0 to 7);
-       arf_reg_value_out:out slv16_array_t(0 to 7);--refers to value stored 
-       arf_value_valid_out:out slv_array_t(0 to 7);
-       free_reg_out: out std_logic_vector (15 downto 0);--denotes which rename registers are free 
+      broadcast4_c_flag_in:in std_logic;
+      broadcast4_c_flag_rename_in:in std_logic_vector(2 downto 0);
+      broadcast4_c_flag_valid_in:in std_logic;
 
+      broadcast4_z_flag_in:in std_logic;
+      broadcast4_z_flag_rename_in:in std_logic_vector(2 downto 0);
+      broadcast4_z_flag_valid_in:in std_logic;
 
-       carry_value_valid_out:out std_logic;
-       zero_value_valid_out:out std_logic;
+      broadcast4_btag_in:in std_logic_vector(2 downto 0);--refers to btag of branch signal useful for updating branch copies
 
-       carry_value_out:out std_logic;
-       zero_value_out:out std_logic;
+      branch_mispredict_broadcast_in:in std_logic_vector(1 downto 0); --00 implies no misprediction 01 implies first branch mispredicted 10 implies second branch mispredicted
 
 
+      broadcast5_rename_in:in std_logic_vector(5 downto 0);
+      broadcast5_orig_destn_in:in std_logic_vector(2 downto 0);--used if a broadcast signal matches with arrival of other instr with same src register 
+      broadcast5_data_in:in std_logic_vector(15 downto 0); --refers to data of rename register broadcasted
+      broadcast5_valid_in: in std_logic;--refers whether broadcasted data is valid or not \
+      broadcast5_btag_in:in std_logic_vector(2 downto 0);
 
-       carry_rename_rf_out:out std_logic_vector(2 downto 0);--stores to which rename carry flag is currently renamed
-       zero_rename_rf_out: out std_logic_vector(2 downto 0); --stores to which rename zero flag is currently renamed
 
-       free_flag_zero_out:out std_logic;-- whether 2 zero registers are free
-       free_flag_carry_out:out std_logic;--whether 2 carry registers are free
+      --ARF and zero and carry flags status
 
-       free_rename_carry_out:out std_logic_vector(7 downto 0);--which of 7 rename carry flags are free
-       free_rename_zero_out:out std_logic_vector(7 downto 0);--which of 7 rename zero flags are free
+      arf_rename_valid_out:out slv_array_t(0 to 7);-- not required if value is valid rename cannot be valid
+      --signal arf_reg_name:array(0 to 29) of std_logic_vector(2 downto 0);
+      arf_reg_rename_out:out slv6_array_t(0 to 7);
+      arf_reg_value_out:out slv16_array_t(0 to 7);--refers to value stored 
+      arf_value_valid_out:out slv_array_t(0 to 7);
+      free_reg_out: out std_logic_vector (15 downto 0);--denotes which rename registers are free 
 
 
+      carry_value_valid_out:out std_logic;
+      zero_value_valid_out:out std_logic;
 
+      carry_value_out:out std_logic;
+      zero_value_out:out std_logic;
 
 
 
+      carry_rename_rf_out:out std_logic_vector(2 downto 0);--stores to which rename carry flag is currently renamed
+      zero_rename_rf_out: out std_logic_vector(2 downto 0); --stores to which rename zero flag is currently renamed
 
-      
+      free_flag_zero_out:out std_logic;-- whether 2 zero registers are free
+      free_flag_carry_out:out std_logic;--whether 2 carry registers are free
 
+      free_rename_carry_out:out std_logic_vector(7 downto 0);--which of 7 rename carry flags are free
+      free_rename_zero_out:out std_logic_vector(7 downto 0);--which of 7 rename zero flags are free
 
 
 
-       --entry in ROB output
-       
-       curr_instr1_valid_rob_out:out std_logic;
-       curr_pc1_rob_out:out std_logic_vector(15 downto 0);
-       destn_code1_rob_out:out std_logic_vector(2 downto 0);
-       op_code1_rob_out:out std_logic_vector(3 downto 0);
-       destn_rename1_rob_out:out std_logic_vector(5 downto 0);
-       destn_rename_c1_rob_out:out std_logic_vector(2 downto 0);
-       destn_rename_z1_rob_out:out std_logic_vector(2 downto 0);
-       destn_btag1_rob_out:out std_logic_vector(2 downto 0);
-       destn_self_tag1_rob_out:out std_logic_vector(2 downto 0);
 
-       
-       curr_instr2_valid_rob_out:out std_logic;
-       curr_pc2_rob_out:out std_logic_vector(15 downto 0);
-       destn_code2_rob_out:out std_logic_vector(2 downto 0);
-       op_code2_rob_out:out std_logic_vector(3 downto 0);
-       destn_rename2_rob_out:out std_logic_vector(5 downto 0);
-       destn_rename_c2_rob_out:out std_logic_vector(2 downto 0);
-       destn_rename_z2_rob_out:out std_logic_vector(2 downto 0);
-       destn_btag2_rob_out:out std_logic_vector(2 downto 0);
-       destn_self_tag2_rob_out:out std_logic_vector(2 downto 0);
 
 
 
 
-        
 
 
 
 
+      --entry in ROB output
 
+      curr_instr1_valid_rob_out:out std_logic;
+      curr_pc1_rob_out:out std_logic_vector(15 downto 0);
+      destn_code1_rob_out:out std_logic_vector(2 downto 0);
+      op_code1_rob_out:out std_logic_vector(3 downto 0);
+      destn_rename1_rob_out:out std_logic_vector(5 downto 0);
+      destn_rename_c1_rob_out:out std_logic_vector(2 downto 0);
+      destn_rename_z1_rob_out:out std_logic_vector(2 downto 0);
+      destn_btag1_rob_out:out std_logic_vector(2 downto 0);
+      destn_self_tag1_rob_out:out std_logic_vector(2 downto 0);
 
-       alu_instr_valid_out:out slv_array_t(0 to 9);
-       alu_op_code_out:out slv4_array_t(0 to 9);
-       alu_op_code_cz_out:out slv2_array_t(0 to 9);
-       alu_destn_rename_code_out:out slv6_array_t(0 to 9);
-       alu_operand1_out:out slv16_array_t(0 to 9);
-       alu_valid1_out:out slv_array_t(0 to 9);
 
-       alu_operand2_out:out slv16_array_t(0 to 9);
-       alu_valid2_out:out slv_array_t(0 to 9);
+      curr_instr2_valid_rob_out:out std_logic;
+      curr_pc2_rob_out:out std_logic_vector(15 downto 0);
+      destn_code2_rob_out:out std_logic_vector(2 downto 0);
+      op_code2_rob_out:out std_logic_vector(3 downto 0);
+      destn_rename2_rob_out:out std_logic_vector(5 downto 0);
+      destn_rename_c2_rob_out:out std_logic_vector(2 downto 0);
+      destn_rename_z2_rob_out:out std_logic_vector(2 downto 0);
+      destn_btag2_rob_out:out std_logic_vector(2 downto 0);
+      destn_self_tag2_rob_out:out std_logic_vector(2 downto 0);
 
-       alu_operand3_out:out slv16_array_t(0 to 9);
-       alu_valid3_out:out slv_array_t(0 to 9);
 
-       alu_c_flag_out:out slv_array_t(0 to 9);
-       alu_c_flag_rename_out:out slv3_array_t(0 to 9);
-       alu_c_flag_valid_out:out slv_array_t(0 to 9);
-       alu_c_flag_destn_addr_out:out slv3_array_t(0 to 9);
 
-       alu_z_flag_out:out slv_array_t(0 to 9);
-       alu_z_flag_rename_out:out slv3_array_t(0 to 9);
-       alu_z_flag_valid_out:out slv_array_t(0 to 9);
-       alu_z_flag_destn_addr_out:out slv3_array_t(0 to 9);
 
 
-       alu_btag_out:out slv3_array_t(0 to 9);
 
-       alu_orign_destn_out:out slv3_array_t(0 to 9);
 
-       alu_curr_pc_out:out slv16_array_t(0 to 9);
 
-       alu_scheduler_valid_out:out slv_array_t(0 to 9);       
 
 
-       ls_instr_valid_out:out slv_array_t(0 to 9);
-       ls_op_code_out:out slv4_array_t(0 to 9);
-       --_op_code_cz_out:out slv2_array_t(0 to 9);
-       ls_destn_rename_code_out:out slv6_array_t(0 to 9);
-       ls_operand1_out:out slv16_array_t(0 to 9);
-       ls_valid1_out:out slv_array_t(0 to 9);
 
-       ls_operand2_out:out slv16_array_t(0 to 9);
-       ls_valid2_out:out slv_array_t(0 to 9);
+      alu_instr_valid_out:out slv_array_t(0 to 9);
+      alu_op_code_out:out slv4_array_t(0 to 9);
+      alu_op_code_cz_out:out slv2_array_t(0 to 9);
+      alu_destn_rename_code_out:out slv6_array_t(0 to 9);
+      alu_operand1_out:out slv16_array_t(0 to 9);
+      alu_valid1_out:out slv_array_t(0 to 9);
 
+      alu_operand2_out:out slv16_array_t(0 to 9);
+      alu_valid2_out:out slv_array_t(0 to 9);
 
-       ls_operand3_out:out slv16_array_t(0 to 9);--denotes which register to load onto or store from
-       ls_valid3_out:out slv_array_t(0 to 9);
+      alu_operand3_out:out slv16_array_t(0 to 9);
+      alu_valid3_out:out slv_array_t(0 to 9);
 
-       
-       ls_btag_out:out slv3_array_t(0 to 9);
+      alu_c_flag_out:out slv_array_t(0 to 9);
+      alu_c_flag_rename_out:out slv3_array_t(0 to 9);
+      alu_c_flag_valid_out:out slv_array_t(0 to 9);
+      alu_c_flag_destn_addr_out:out slv3_array_t(0 to 9);
 
-       ls_orign_destn_out:out slv3_array_t(0 to 9);
+      alu_z_flag_out:out slv_array_t(0 to 9);
+      alu_z_flag_rename_out:out slv3_array_t(0 to 9);
+      alu_z_flag_valid_out:out slv_array_t(0 to 9);
+      alu_z_flag_destn_addr_out:out slv3_array_t(0 to 9);
 
-       ls_curr_pc_out:out slv16_array_t(0 to 9);
-       --ls_imm_out:out slv16_array_t(0 to 9);
 
+      alu_btag_out:out slv3_array_t(0 to 9);
 
-       ls_scheduler_valid_out:out slv_array_t(0 to 9);
+      alu_orign_destn_out:out slv3_array_t(0 to 9);
 
+      alu_curr_pc_out:out slv16_array_t(0 to 9);
 
+      alu_scheduler_valid_out:out slv_array_t(0 to 9);       
 
-       jmp_instr_valid_out:out slv_array_t(0 to 9);
-       jmp_op_code_out:out slv4_array_t(0 to 9);
-       --_op_code_cz_out:out slv2_array_t(0 to 9);
-       jmp_destn_rename_code_out:out slv6_array_t(0 to 9);
-       jmp_operand1_out:out slv16_array_t(0 to 9);
-       jmp_valid1_out:out slv_array_t(0 to 9);
 
-       jmp_operand2_out:out slv16_array_t(0 to 9);
-       jmp_valid2_out:out slv_array_t(0 to 9);
+      ls_instr_valid_out:out slv_array_t(0 to 9);
+      ls_op_code_out:out slv4_array_t(0 to 9);
+      --_op_code_cz_out:out slv2_array_t(0 to 9);
+      ls_destn_rename_code_out:out slv6_array_t(0 to 9);
+      ls_operand1_out:out slv16_array_t(0 to 9);
+      ls_valid1_out:out slv_array_t(0 to 9);
 
+      ls_operand2_out:out slv16_array_t(0 to 9);
+      ls_valid2_out:out slv_array_t(0 to 9);
 
-       jmp_operand3_out:out slv16_array_t(0 to 9);--denotes which register to load onto or store from
-       jmp_valid3_out:out slv_array_t(0 to 9);
 
-       
-       jmp_btag_out:out slv3_array_t(0 to 9);
+      ls_operand3_out:out slv16_array_t(0 to 9);--denotes which register to load onto or store from
+      ls_valid3_out:out slv_array_t(0 to 9);
 
-       jmp_orign_destn_out:out slv3_array_t(0 to 9);
 
-       jmp_curr_pc_out:out slv16_array_t(0 to 9);
-       --ls_imm_out:out slv16_array_t(0 to 9);
+      ls_btag_out:out slv3_array_t(0 to 9);
 
+      ls_orign_destn_out:out slv3_array_t(0 to 9);
 
-       jmp_scheduler_valid_out:out slv_array_t(0 to 9);
-       jmp_next_pc_out:out slv16_array_t(0 to 9);
+      ls_curr_pc_out:out slv16_array_t(0 to 9);
+      --ls_imm_out:out slv16_array_t(0 to 9);
 
-       jmp_self_tag_out:out slv3_array_t(0 to 9);
 
+      ls_scheduler_valid_out:out slv_array_t(0 to 9);
 
 
-       halt_out:out std_logic--instr could not be written onto RS 
 
+      jmp_instr_valid_out:out slv_array_t(0 to 9);
+      jmp_op_code_out:out slv4_array_t(0 to 9);
+      --_op_code_cz_out:out slv2_array_t(0 to 9);
+      jmp_destn_rename_code_out:out slv6_array_t(0 to 9);
+      jmp_operand1_out:out slv16_array_t(0 to 9);
+      jmp_valid1_out:out slv_array_t(0 to 9);
 
+      jmp_operand2_out:out slv16_array_t(0 to 9);
+      jmp_valid2_out:out slv_array_t(0 to 9);
 
 
+      jmp_operand3_out:out slv16_array_t(0 to 9);--denotes which register to load onto or store from
+      jmp_valid3_out:out slv_array_t(0 to 9);
 
-       );
+
+      jmp_btag_out:out slv3_array_t(0 to 9);
+
+      jmp_orign_destn_out:out slv3_array_t(0 to 9);
+
+      jmp_curr_pc_out:out slv16_array_t(0 to 9);
+      --ls_imm_out:out slv16_array_t(0 to 9);
+
+
+      jmp_scheduler_valid_out:out slv_array_t(0 to 9);
+      jmp_next_pc_out:out slv16_array_t(0 to 9);
+
+      jmp_self_tag_out:out slv3_array_t(0 to 9);
+
+
+
+      halt_out:out std_logic--instr could not be written onto RS 
+
+
+
+
+
+);
 
 end entity;
 
 
-architecture reservation_process of reservation_state is
+architecture reservation_process of RS is
 
 signal arf_rename_valid:slv_array_t(0 to 7):=(others=>'0');-- not required if value is valid rename cannot be valid
 --signal arf_reg_name:array(0 to 29) of std_logic_vector(2 downto 0);
