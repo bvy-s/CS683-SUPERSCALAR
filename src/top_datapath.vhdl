@@ -160,7 +160,7 @@ component add_pc is
     end component bit1_2x1;
 
 
-    component reservation_state is
+    component RS is
 
      port (instr1_valid_in:in std_logic;
  	   op_code1_in:in std_logic_vector(3 downto 0);
@@ -1477,7 +1477,7 @@ end component ; -- z_reg
 
   
 
-      RS :reservation_state port map(
+      ReStation :RS port map(
 
        instr1_valid_in=>instr1_RS_valid_in,
  	   op_code1_in=>instr1_decode_op_code,
