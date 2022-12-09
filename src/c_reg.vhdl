@@ -11,25 +11,26 @@ entity c_reg is
 	c_valid: in std_logic;
 	c_data_out: out std_logic
   );
-end entity ; -- c_reg
+end entity;
 
-architecture arch of c_reg is
-	signal c_data_signal: std_logic;
+architecture arc of c_reg is
+	signal c_data: std_logic;
+
 begin
 
-C_reg_proc : process(clk,c_data_in,c_valid,reset)
-
+c_proc : process(clk,c_data_in,c_valid,reset)
 begin
 	if (clk'event and clk = '1') then
 		if (reset = '1') then
-			c_data_signal <= '0';
+			c_data <= '0';
 		else
 			if (c_valid = '1') then
-				c_data_signal <= c_data_in;
-			end if ;
-		end if ;
-	end if ;
-end process ; -- C_reg
-c_data_out <= c_data_signal;
+				c_data <= c_data_in;
+			end if;
+		end if;
+	end if;
+end process; 
 
-end architecture ; -- arch
+c_data_out <= c_data;
+
+end architecture ;

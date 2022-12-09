@@ -9,7 +9,7 @@ entity bit1_2x1 is
            o   : out std_logic);
 end entity;
 
-architecture Behavioral of bit1_2x1 is
+architecture behaviour of bit1_2x1 is
 begin
 	process(d_0,d_1,c_0)
 	begin
@@ -19,4 +19,4 @@ begin
 			o <= d_1;
 		end if;
     end process;
-end Behavioral;
+end behaviour;
