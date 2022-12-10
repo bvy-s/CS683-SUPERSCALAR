@@ -14,7 +14,7 @@ end memory_data;
 
    
 architecture syn of memory_data is   
-  type ram_type is array (1023 downto 0) of std_logic_vector (15 downto 0);  
+  type ram_type is array (0 to 1023) of std_logic_vector (15 downto 0);  
 
   	function load_from(file_name : in string) return ram_type is
 		file 	 mif_file : text open read_mode is file_name;
